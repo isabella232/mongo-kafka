@@ -143,6 +143,7 @@ public final class ConnectionValidator {
                     c.addErrorMessage(format("Invalid user permissions. Missing the following action permissions: %s", missingPermissions))
             );
         } catch (MongoSecurityException e) {
+            LOGGER.error("Invalid user permissions authentication failed.");
             getConfigByName(config, configName).ifPresent(c -> c.addErrorMessage("Invalid user permissions authentication failed.")
             );
         } catch (Exception e) {

@@ -35,8 +35,11 @@ import org.apache.kafka.connect.sink.SinkConnector;
 import com.mongodb.kafka.connect.sink.MongoSinkConfig;
 import com.mongodb.kafka.connect.sink.MongoSinkTask;
 import com.mongodb.kafka.connect.sink.MongoSinkTopicConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MongoSinkConnector extends SinkConnector {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MongoSinkConnector.class);
     private static final List<String> REQUIRED_SINK_ACTIONS = asList("insert", "update", "remove");
     private Map<String, String> settings;
 
@@ -102,6 +105,7 @@ public class MongoSinkConnector extends SinkConnector {
                                     MongoSinkConfig.CONNECTION_URI_CONFIG, config);
                         });
                     } catch (Exception e) {
+                        LOGGER.error("IException validating sink configs", e);
                         // Ignore
                     } finally {
                         client.close();
